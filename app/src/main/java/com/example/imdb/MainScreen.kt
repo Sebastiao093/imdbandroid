@@ -2,39 +2,49 @@ package com.example.imdb
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.imdb.navigation.AppScreens
 import com.example.imdb.ui.theme.*
 
 @Composable
 fun MainScreen(navController: NavHostController) {
+    val navController = navController
     Box(
         Modifier
             .fillMaxSize()
             .padding(30.dp)
     ) {
-        Body(Modifier.align(Alignment.Center))
+        Body(Modifier.align(Alignment.Center), navController)
     }
 
 }
 
 @Composable
-fun Body(modifier: Modifier) {
+fun Body(modifier: Modifier, navController: NavHostController) {
 
     var userEmail by rememberSaveable { mutableStateOf("") }
     var userPassword by rememberSaveable { mutableStateOf("") }
@@ -59,7 +69,7 @@ fun Body(modifier: Modifier) {
         Spacer(modifier = Modifier.size(16.dp))
         SocialIcons()
         Spacer(modifier = Modifier.size(16.dp))
-        AccountText(Modifier.align(Alignment.CenterHorizontally))
+        AccountText(Modifier.align(Alignment.CenterHorizontally), navController)
         Spacer(modifier = Modifier.size(16.dp))
         InvitedText(Modifier.align(Alignment.CenterHorizontally))
     }
@@ -83,7 +93,7 @@ fun UserTitle() {
     Text(
         text = "Usuario",
         color = BlackGrey,
-        fontSize = 20.sp,
+        fontSize = 16.sp,
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium
     )
@@ -94,7 +104,23 @@ fun UserEmail(email: String, onTextChanged: (String) -> Unit) {
     TextField(
         value = email,
         onValueChange = { onTextChanged(it) },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Grey70,
+            backgroundColor = White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            cursorColor = Grey70,
+        ),
+        textStyle = TextStyle(
+            fontFamily = RobotoBoldFamily,
+            fontWeight = FontWeight.Light,
+            fontSize = 14.sp,
+        ),
+        shape = RoundedCornerShape(10.dp)
     )
 }
 
@@ -103,7 +129,7 @@ fun PasswordTitle() {
     Text(
         text = "Contraseña",
         color = BlackGrey,
-        fontSize = 20.sp,
+        fontSize = 16.sp,
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium
     )
@@ -111,10 +137,35 @@ fun PasswordTitle() {
 
 @Composable
 fun UserPassword(password: String, onTextChanged: (String) -> Unit) {
+    var passwordVisibility by remember { mutableStateOf(false) }
     TextField(
         value = password,
         onValueChange = { onTextChanged(it) },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Grey70,
+            backgroundColor = White,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            cursorColor = Grey70,
+        ),
+        textStyle = TextStyle(
+            fontFamily = RobotoBoldFamily,
+            fontWeight = FontWeight.Light,
+            fontSize = 14.sp,
+        ),
+        shape = RoundedCornerShape(10.dp),
+        trailingIcon = {
+            val icon =
+                if (passwordVisibility) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
+            IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                Icon(imageVector = icon, contentDescription = "show password")
+            }
+        },
+        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation()
     )
 }
 
@@ -123,7 +174,7 @@ fun ForgotPasswordTitle() {
     Text(
         text = "¿Olvidaste la contraseña?",
         color = BlackGrey,
-        fontSize = 20.sp,
+        fontSize = 12.sp,
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Light
     )
@@ -131,7 +182,18 @@ fun ForgotPasswordTitle() {
 
 @Composable
 fun LoginButton(loginEnable: Boolean) {
-    Button(onClick = {}, enabled = loginEnable, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(contentColor = BlackGrey, disabledContentColor = Grey)) {
+    Button(
+        onClick = {},
+        enabled = loginEnable,
+        modifier = Modifier.fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = BlackGrey,
+            disabledBackgroundColor = Grey,
+            contentColor = BlackGrey,
+            disabledContentColor = Grey,
+        ),
+        shape = RoundedCornerShape(10.dp)
+    ) {
         Text(
             text = "Login",
             color = White,
@@ -149,7 +211,7 @@ fun TextTitle(modifier: Modifier) {
     Text(
         text = "Ó podes ingresar con",
         color = Grey,
-        fontSize = 25.sp,
+        fontSize = 16.sp,
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Light,
         modifier = modifier
@@ -159,50 +221,74 @@ fun TextTitle(modifier: Modifier) {
 
 @Composable
 fun SocialIcons() {
-    Row(Modifier.fillMaxWidth(),
+    Row(
+        Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        Box(modifier = Modifier
-            .size(40.dp)
-            .clip(CircleShape)
-            .background(color = White),
-            contentAlignment = Alignment.Center) {
-            Image(painter = painterResource(id = R.drawable.apple), contentDescription = "Apple", modifier = Modifier.align(
-                Alignment.Center))
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(color = White),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.apple),
+                contentDescription = "Apple",
+                modifier = Modifier.align(
+                    Alignment.Center
+                )
+            )
         }
         Spacer(modifier = Modifier.size(10.dp))
-        Box(modifier = Modifier
-            .size(40.dp)
-            .clip(CircleShape)
-            .background(color = White),
-            contentAlignment = Alignment.Center) {
-            Image(painter = painterResource(id = R.drawable.facebook), contentDescription = "Apple", modifier = Modifier.align(
-                Alignment.Center))
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(color = White),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.facebook),
+                contentDescription = "Apple",
+                modifier = Modifier.align(
+                    Alignment.Center
+                )
+            )
         }
         Spacer(modifier = Modifier.size(10.dp))
-        Box(modifier = Modifier
-            .size(40.dp)
-            .clip(CircleShape)
-            .background(color = White),
-            contentAlignment = Alignment.Center) {
-            Image(painter = painterResource(id = R.drawable.google), contentDescription = "Apple", modifier = Modifier.align(
-                Alignment.Center))
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(color = White),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.google),
+                contentDescription = "Apple",
+                modifier = Modifier.align(
+                    Alignment.Center
+                )
+            )
         }
     }
 }
 
 
 @Composable
-fun AccountText(modifier: Modifier) {
-    Row(Modifier.fillMaxWidth(),
+fun AccountText(modifier: Modifier, navController: NavHostController) {
+    Row(
+        Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center) {
+        horizontalArrangement = Arrangement.Center
+    ) {
 
         Text(
             text = "¿No tenes cuenta?",
             color = Grey,
-            fontSize = 25.sp,
+            fontSize = 16.sp,
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Light,
             modifier = modifier
@@ -211,12 +297,13 @@ fun AccountText(modifier: Modifier) {
         Text(
             text = "Regístrate",
             color = BlackGrey,
-            fontSize = 25.sp,
+            fontSize = 16.sp,
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Light,
-            modifier = modifier
-        )
-        
+            modifier = modifier.clickable { navController.navigate(AppScreens.RegisterScreen.route) },
+
+            )
+
     }
 }
 
@@ -226,13 +313,12 @@ fun InvitedText(modifier: Modifier) {
     Text(
         text = "Continuar como invitado",
         color = BlackGrey,
-        fontSize = 25.sp,
+        fontSize = 16.sp,
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium,
         modifier = modifier
     )
 }
-
 
 
 /*

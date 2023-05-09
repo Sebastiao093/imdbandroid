@@ -20,7 +20,7 @@ fun AppNavigation() {
             composable(AppScreens.MainScreen.route){
                 MainScreen(navController)
             }
-            composable(AppScreens.MainScreen.route){
+            composable(AppScreens.RegisterScreen.route){
                 RegisterScreen(navController)
             }
         })
