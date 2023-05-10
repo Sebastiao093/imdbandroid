@@ -30,12 +30,12 @@ import com.example.imdb.ui.theme.*
 
 @Composable
 fun RegisterScreen(navController: NavHostController) {
-    Surface(color = White) {
+    Surface(color = White100) {
         Box(
             Modifier
                 .fillMaxSize()
                 .padding(10.dp)
-                .background(color = White)
+                .background(color = White100)
         ) {
             Header(Modifier.align(Alignment.TopStart), navController)
             Box(
@@ -123,7 +123,7 @@ fun UserNameRegister(name: String, onTextChanged: (String) -> Unit) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
-            backgroundColor = White,
+            backgroundColor = White100,
             focusedIndicatorColor = Grey70,
             unfocusedIndicatorColor = Grey70,
             cursorColor = Grey70,
@@ -151,7 +151,7 @@ fun EmailRegister(email: String, onTextChanged: (String) -> Unit) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
-            backgroundColor = White,
+            backgroundColor = White100,
             focusedIndicatorColor = Grey70,
             unfocusedIndicatorColor = Grey70,
             cursorColor = Grey70,
@@ -179,7 +179,7 @@ fun PasswordRegister(password: String, onTextChanged: (String) -> Unit) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
-            backgroundColor = White,
+            backgroundColor = White100,
             focusedIndicatorColor = Grey70,
             unfocusedIndicatorColor = Grey70,
             cursorColor = Grey70,
