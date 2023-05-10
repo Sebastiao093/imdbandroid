@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.imdb.MainScreen
 import com.example.imdb.RegisterScreen
+import com.example.imdb.SearchScreen
 import com.example.imdb.SplashScreen
 
 @Composable
@@ -22,6 +23,9 @@ fun AppNavigation() {
             }
             composable(AppScreens.RegisterScreen.route){
                 RegisterScreen(navController)
+            }
+            composable(AppScreens.SearchScreen.route){
+                SearchScreen(navController)
             }
         })
 }

@@ -71,21 +71,14 @@ fun Body(modifier: Modifier, navController: NavHostController) {
         Spacer(modifier = Modifier.size(16.dp))
         AccountText(Modifier.align(Alignment.CenterHorizontally), navController)
         Spacer(modifier = Modifier.size(16.dp))
-        InvitedText(Modifier.align(Alignment.CenterHorizontally))
+        InvitedText(Modifier.align(Alignment.CenterHorizontally), navController)
     }
 
 }
 
 @Composable
 fun HeaderTitle(modifier: Modifier) {
-    Text(
-        text = "IMDb",
-        color = Black,
-        fontSize = 70.sp,
-        fontFamily = RobotoBoldFamily,
-        fontWeight = FontWeight.Bold,
-        modifier = modifier
-    )
+    Image(painter = painterResource(id = R.drawable.imdb_logo2x), contentDescription = "logo", modifier = modifier)
 }
 
 @Composable
@@ -110,7 +103,7 @@ fun UserEmail(email: String, onTextChanged: (String) -> Unit) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
-            backgroundColor = White,
+            backgroundColor = White100,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             cursorColor = Grey70,
@@ -147,7 +140,7 @@ fun UserPassword(password: String, onTextChanged: (String) -> Unit) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
-            backgroundColor = White,
+            backgroundColor = White100,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             cursorColor = Grey70,
@@ -230,7 +223,7 @@ fun SocialIcons() {
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(color = White),
+                .background(color = White100),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -246,7 +239,7 @@ fun SocialIcons() {
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(color = White),
+                .background(color = White100),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -262,7 +255,7 @@ fun SocialIcons() {
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(color = White),
+                .background(color = White100),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -309,14 +302,14 @@ fun AccountText(modifier: Modifier, navController: NavHostController) {
 
 
 @Composable
-fun InvitedText(modifier: Modifier) {
+fun InvitedText(modifier: Modifier, navController: NavHostController) {
     Text(
         text = "Continuar como invitado",
         color = BlackGrey,
         fontSize = 16.sp,
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium,
-        modifier = modifier
+        modifier = modifier.clickable { navController.navigate(AppScreens.SearchScreen.route) }
     )
 }
 
