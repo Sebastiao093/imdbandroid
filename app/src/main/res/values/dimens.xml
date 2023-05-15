@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Spaces   -->
+    <dimen name="space_default">2.dp</dimen>
+    <dimen name="space_XXXsmall">4.dp</dimen>
+    <dimen name="space_XXsmall">6.dp</dimen>
+    <dimen name="space_extrasmall">8.dp</dimen>
+    <dimen name="space_small">10.dp</dimen>
+    <dimen name="space_medium">12.dp</dimen>
+    <dimen name="space_Mmedium">14.dp</dimen>
+    <dimen name="space_MMmedium">16.dp</dimen>
+    <dimen name="space_MMMmedium">20.dp</dimen>
+    <dimen name="space_large">24.dp</dimen>
+    <dimen name="space_extralarge">30.dp</dimen>
+    <dimen name="space_XXlarge">40.dp</dimen>
+    <dimen name="space_XXXlarge">50.dp</dimen>
+
+    <!--   Font Sizes   -->
+    <dimen name="fontsize_default">2.sp</dimen>
+    <dimen name="fontsize_XXXsmall">4.sp</dimen>
+    <dimen name="fontsize_XXsmall">6.sp</dimen>
+    <dimen name="fontsize_extrasmall">8.sp</dimen>
+    <dimen name="fontsize_small">10.sp</dimen>
+    <dimen name="fontsize_medium">12.sp</dimen>
+    <dimen name="fontsize_Mmedium">14.sp</dimen>
+    <dimen name="fontsize_MMmedium">16.sp</dimen>
+    <dimen name="fontsize_MMMmedium">20.sp</dimen>
+    <dimen name="fontsize_large">24.sp</dimen>
+    <dimen name="fontsize_extralarge">30.sp</dimen>
+    <dimen name="fontsize_XXlarge">40.sp</dimen>
+    <dimen name="fontsize_XXXlarge">50.sp</dimen>
+
+    <!--   Paddings   -->
+    <dimen name="padding_default">2.dp</dimen>
+    <dimen name="padding_XXXsmall">4.dp</dimen>
+    <dimen name="padding_XXsmall">6.dp</dimen>
+    <dimen name="padding_extrasmall">8.dp</dimen>
+    <dimen name="padding_small">10.dp</dimen>
+    <dimen name="padding_medium">12.dp</dimen>
+    <dimen name="padding_Mmedium">14.dp</dimen>
+    <dimen name="padding_MMmedium">16.dp</dimen>
+    <dimen name="padding_MMMmedium">20.dp</dimen>
+    <dimen name="padding_large">24.dp</dimen>
+    <dimen name="padding_extralarge">30.dp</dimen>
+    <dimen name="padding_XXlarge">40.dp</dimen>
+    <dimen name="padding_XXXlarge">50.dp</dimen>
+
+
+    <!--    Box Sizes   -->
+    <dimen name="box_default">10.dp</dimen>
+    <dimen name="box_Largerdefault">20.dp</dimen>
+    <dimen name="box_XXXsmall">40.dp</dimen>
+    <dimen name="box_XXsmall">60.dp</dimen>
+    <dimen name="box_extrasmall">80.dp</dimen>
+    <dimen name="box_small">100.dp</dimen>
+    <dimen name="box_medium">120.dp</dimen>
+    <dimen name="box_Mmedium">140.dp</dimen>
+    <dimen name="box_Mmediummore">150.dp</dimen>
+    <dimen name="box_MMmedium">160.dp</dimen>
+    <dimen name="box_MMMmedium">200.dp</dimen>
+    <dimen name="box_large">240.dp</dimen>
+    <dimen name="box_extralarge">300.dp</dimen>
+    <dimen name="box_XXlarge">400.dp</dimen>
+    <dimen name="box_XXXlarge">500.dp</dimen>
+
+    <!--    Specials    -->
+    <dimen name="divider_thickness">0.5dp</dimen>
+    <dimen name="percent">0.8dp</dimen>
+
+</resources>
