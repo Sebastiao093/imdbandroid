@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">imdb</string>
+
+    <!--    MainScreen-->
+    <string name="user_title">Usuario</string>
+    <string name="password_title">Contraseña</string>
+    <string name="forgotpassword_title">¿Olvidaste la contraseña?</string>
+    <string name="loginbutton_title">Login</string>
+    <string name="text_title">Ó podes ingresar con</string>
+    <string name="account_text">¿No tenes cuenta?</string>
+    <string name="accountregister_text">Regístrate</string>
+    <string name="invited_text">Continuar como invitado</string>
+
+    <!--    RegisterScreen-->
+    <string name="account_title">Crear una cuenta</string>
+    <string name="labelname_title">Nombre</string>
+    <string name="labelemail_title">Correo electrónico</string>
+    <string name="labelpassword_title">Contraseña</string>
+    <string name="passwordtext_title">La contraseña debe contener 8 caracteres</string>
+    <string name="acceptbutton_text">Aceptar</string>
+
+    <!--    SearchScreen-->
+    <string name="searchfield_text">Buscar IMDb</string>
+
 </resources>

@@ -15,16 +15,16 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.imdb.ui.theme.*
 
@@ -34,14 +34,14 @@ fun RegisterScreen(navController: NavHostController) {
         Box(
             Modifier
                 .fillMaxSize()
-                .padding(10.dp)
+                .padding(dimensionResource(id = R.dimen.padding_small))
                 .background(color = White100)
         ) {
             Header(Modifier.align(Alignment.TopStart), navController)
             Box(
                 Modifier
                     .fillMaxSize()
-                    .padding(25.dp)
+                    .padding(dimensionResource(id = R.dimen.padding_large))
             ) {
                 BodyRegister(Modifier.align(Alignment.TopStart))
             }
@@ -63,21 +63,21 @@ fun BodyRegister(modifier: Modifier) {
         IconLogo(
             Modifier
                 .align(Alignment.Start)
-                .padding(top = 25.dp)
+                .padding(top = dimensionResource(id = R.dimen.padding_large))
         )
-        Spacer(modifier = Modifier.size(30.dp))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_extralarge)))
         AccountTitle()
-        Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
         UserNameRegister(userNameRegister) { userNameRegister = it }
-        Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
         EmailRegister(userEmailRegister) { userEmailRegister = it }
-        Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
         PasswordRegister(userPasswordRegister) { userPasswordRegister = it }
-        Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
         PasswordTitleText()
-        Spacer(modifier = Modifier.size(25.dp))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_large)))
         AcceptButton(isLoginEnable)
-        Spacer(modifier = Modifier.size(35.dp))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_XXlarge)))
     }
 }
 
@@ -103,9 +103,11 @@ fun IconLogo(modifier: Modifier) {
 @Composable
 fun AccountTitle() {
     Text(
-        text = "Crear una cuenta",
+        text = stringResource(id = R.string.account_title),
         color = BlackGrey,
-        fontSize = 20.sp,
+        fontSize = with(LocalDensity.current){
+            dimensionResource(id = R.dimen.fontsize_MMMmedium).toSp()
+        },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium
     )
@@ -119,7 +121,7 @@ fun UserNameRegister(name: String, onTextChanged: (String) -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
-        label = { Text(text = "Nombre") },
+        label = { Text(text = stringResource(id = R.string.labelname_title)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
@@ -132,9 +134,11 @@ fun UserNameRegister(name: String, onTextChanged: (String) -> Unit) {
         textStyle = TextStyle(
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
+            fontSize = with(LocalDensity.current){
+                dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+            },
         ),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default)),
 
         )
 }
@@ -147,7 +151,7 @@ fun EmailRegister(email: String, onTextChanged: (String) -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
-        label = { Text(text = "Correo electrónico") },
+        label = { Text(text = stringResource(id = R.string.labelemail_title)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
@@ -160,9 +164,11 @@ fun EmailRegister(email: String, onTextChanged: (String) -> Unit) {
         textStyle = TextStyle(
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
+            fontSize = with(LocalDensity.current){
+                dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+            },
         ),
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default))
     )
 }
 
@@ -175,7 +181,7 @@ fun PasswordRegister(password: String, onTextChanged: (String) -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
-        label = { Text(text = "Contraseña") },
+        label = { Text(text = stringResource(id = R.string.labelpassword_title)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
@@ -188,9 +194,11 @@ fun PasswordRegister(password: String, onTextChanged: (String) -> Unit) {
         textStyle = TextStyle(
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
+            fontSize = with(LocalDensity.current){
+                dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+            },
         ),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default)),
         trailingIcon = {
             val icon =
                 if (passwordVisibility) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
@@ -205,9 +213,11 @@ fun PasswordRegister(password: String, onTextChanged: (String) -> Unit) {
 @Composable
 fun PasswordTitleText() {
     Text(
-        text = "La contraseña debe contener 8 caracteres",
+        text = stringResource(id = R.string.passwordtext_title),
         color = Grey,
-        fontSize = 12.sp,
+        fontSize = with(LocalDensity.current){
+            dimensionResource(id = R.dimen.fontsize_medium).toSp()
+        },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Light
     )
@@ -225,12 +235,14 @@ fun AcceptButton(loginEnable: Boolean) {
             contentColor = BlackGrey,
             disabledContentColor = Grey,
         ),
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default))
     ) {
         Text(
-            text = "Aceptar",
+            text = stringResource(id = R.string.acceptbutton_text),
             color = White,
-            fontSize = 20.sp,
+            fontSize = with(LocalDensity.current){
+                dimensionResource(id = R.dimen.fontsize_MMMmedium).toSp()
+            },
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Medium
         )
