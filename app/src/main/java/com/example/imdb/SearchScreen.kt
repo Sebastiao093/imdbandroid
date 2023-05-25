@@ -1,6 +1,5 @@
 package com.example.imdb
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,7 +19,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,20 +26,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.imdb.model.Movie
+import coil.compose.rememberAsyncImagePainter
+import com.example.imdb.model.MovieResult
+import com.example.imdb.search.SearchService
 import com.example.imdb.ui.theme.*
 
 @Composable
 fun SearchScreen(navController: NavHostController) {
+    val apiKey = stringResource(id = R.string.api_key)
+    val movieList = remember { mutableStateListOf<MovieResult>() }
+    LaunchedEffect(key1 = true){
+        movieList.swapList(getTopRatedMovies(apiKey))
+        println(movieList.toList().toString())
+    }
     Column(
         Modifier
             .fillMaxSize()
             .background(color = White),
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.Top
     ) {
         BodySearch(Modifier.align(Alignment.CenterHorizontally), navController)
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
-        MoviesListRecyclerView(Modifier.align(Alignment.CenterHorizontally))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
+        MoviesListRecyclerView(Modifier.align(Alignment.CenterHorizontally), movieList)
     }
 
 }
@@ -52,7 +59,7 @@ fun BodySearch(modifier: Modifier, navController: NavHostController) {
         Box(
             Modifier
                 .fillMaxWidth()
-                .height(dimensionResource(id = R.dimen.box_small))
+                .height(dimensionResource(id = R.dimen.box_100dp))
                 .background(color = White100)
         ) {
             SearchField(searchText) { searchText = it }
@@ -63,7 +70,7 @@ fun BodySearch(modifier: Modifier, navController: NavHostController) {
 
 @Composable
 fun SearchField(searchText: String, onTextChanged: (String) -> Unit) {
-    Box(Modifier.padding(dimensionResource(id = R.dimen.padding_large))) {
+    Box(Modifier.padding(dimensionResource(id = R.dimen.padding_24dp))) {
         TextField(
             value = searchText,
             onValueChange = { onTextChanged(it) },
@@ -72,12 +79,12 @@ fun SearchField(searchText: String, onTextChanged: (String) -> Unit) {
             singleLine = true,
             label = {
                 Text(
-                    text = stringResource(id = R.string.searchfield_text),
+                    text = stringResource(id = R.string.search_field_text),
                     color = Grey,
                     fontFamily = RobotoBoldFamily,
                     fontWeight = FontWeight.Medium,
                     fontSize = with(LocalDensity.current) {
-                        dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                        dimensionResource(id = R.dimen.font_size_16sp).toSp()
                     },
                 )
             },
@@ -94,11 +101,11 @@ fun SearchField(searchText: String, onTextChanged: (String) -> Unit) {
                 fontFamily = RobotoBoldFamily,
                 fontWeight = FontWeight.Medium,
                 fontSize = with(LocalDensity.current) {
-                    dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                    dimensionResource(id = R.dimen.font_size_16sp).toSp()
                 },
                 color = Grey
             ),
-            shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default)),
+            shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp)),
             leadingIcon = {
                 IconButton(onClick = { }) {
                     Icon(imageVector = Icons.Filled.Search, contentDescription = "search")
@@ -109,20 +116,20 @@ fun SearchField(searchText: String, onTextChanged: (String) -> Unit) {
 }
 
 @Composable
-fun MoviesListRecyclerView(modifier: Modifier) {
+fun MoviesListRecyclerView(modifier: Modifier, movieList: List<MovieResult>) {
     LazyColumn(
 
         horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
-        items(getMovies()) { movie ->
-            CardItemMovie(movie = movie, modifier)
+        items(movieList) { movieResult ->
+            CardItemMovie(movie = movieResult, modifier)
         }
     }
 }
 
 @Composable
-fun CardItemMovie(movie: Movie, modifier: Modifier) {
+fun CardItemMovie(movie: MovieResult, modifier: Modifier) {
     Box(modifier = modifier) {
         val configuration = LocalConfiguration.current
         val screenWidth = configuration.screenWidthDp
@@ -136,70 +143,70 @@ fun CardItemMovie(movie: Movie, modifier: Modifier) {
                 ),
         )
     }
-    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
+    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
     Row {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(dimensionResource(id = R.dimen.box_Mmediummore)),
+                .height(dimensionResource(id = R.dimen.box_180dp)),
             backgroundColor = White,
             elevation = 0.dp
         ) {
             Row(horizontalArrangement = Arrangement.Center) {
-                Column() {
+                Column {
                     Image(
-                        painter = painterResource(id = movie.photo),
+                        painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w200${movie.posterPath}"),
                         contentDescription = "Movie Photo",
                         modifier = Modifier
-                            .height(dimensionResource(id = R.dimen.box_Mmediummore))
-                            .width(dimensionResource(id = R.dimen.box_medium))
+                            .height(dimensionResource(id = R.dimen.box_180dp))
+                            .width(dimensionResource(id = R.dimen.box_120dp))
                             .padding(
-                                top = dimensionResource(id = R.dimen.padding_small),
-                                bottom = dimensionResource(id = R.dimen.padding_small),
-                                start = dimensionResource(id = R.dimen.padding_small)
+                                top = dimensionResource(id = R.dimen.padding_10dp),
+                                bottom = dimensionResource(id = R.dimen.padding_10dp),
+                                start = dimensionResource(id = R.dimen.padding_10dp)
                             ),
                         contentScale = ContentScale.Crop
                     )
                 }
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.space_XXsmall)),
+                    verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.space_6dp)),
                     modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.box_MMMmedium))
-                        .height(dimensionResource(id = R.dimen.box_Mmediummore))
+                        .width(dimensionResource(id = R.dimen.box_200dp))
+                        .height(dimensionResource(id = R.dimen.box_150dp))
                         .padding(
-                            top = dimensionResource(id = R.dimen.padding_MMmedium),
-                            bottom = dimensionResource(id = R.dimen.padding_small),
-                            start = dimensionResource(id = R.dimen.padding_XXsmall)
+                            top = dimensionResource(id = R.dimen.padding_16dp),
+                            bottom = dimensionResource(id = R.dimen.padding_10dp),
+                            start = dimensionResource(id = R.dimen.padding_6dp)
                         ),
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = movie.name,
+                        text = movie.title,
                         color = Black,
                         fontFamily = RobotoBoldFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize = with(LocalDensity.current) {
-                            dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                            dimensionResource(id = R.dimen.font_size_16sp).toSp()
                         },
                     )
-                    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_default)))
+                    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_2dp)))
                     Text(
-                        text = "${movie.year}",
+                        text = movie.releaseDate.substring(startIndex = 0, endIndex = 4),
                         color = Grey,
                         fontFamily = RobotoBoldFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize = with(LocalDensity.current) {
-                            dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                            dimensionResource(id = R.dimen.font_size_16sp).toSp()
                         },
                     )
-                    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_MMmedium)))
+                    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_16dp)))
                     Text(
-                        text = movie.actors,
+                        text = movie.overview,
                         color = Grey,
                         fontFamily = RobotoBoldFamily,
                         fontWeight = FontWeight.Normal,
                         fontSize = with(LocalDensity.current) {
-                            dimensionResource(id = R.dimen.fontsize_Mmedium).toSp()
+                            dimensionResource(id = R.dimen.font_size_14sp).toSp()
                         },
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
@@ -212,12 +219,12 @@ fun CardItemMovie(movie: Movie, modifier: Modifier) {
 
 }
 
-fun getMovies(): List<Movie> {
-    return listOf(
-        Movie("Dune", 2021, "Timothee Chalamet, Zendaya", R.drawable.dune),
-        Movie("Free Guy", 2021, "Ryan Reynolds, Jodie Comer", R.drawable.freeguy),
-        Movie("Shang-Chi", 2021, "Simu Lui, Awkwafina", R.drawable.shangchi),
-        Movie("Suicide Squad", 2021, "Margot Robbie, John Cena", R.drawable.suicidesquad)
-    )
+suspend fun getTopRatedMovies(apiKey: String): List<MovieResult> {
+    return SearchService().getTopRatedMovies(apiKey)
+}
+
+fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
+    clear()
+    addAll(newList)
 }
 

@@ -26,8 +26,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.imdb.navigation.AppScreens
 import com.example.imdb.ui.theme.*
@@ -38,7 +36,7 @@ fun MainScreen(navController: NavHostController) {
     Box(
         Modifier
             .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.padding_extralarge))
+            .padding(dimensionResource(id = R.dimen.padding_30dp))
     ) {
         Body(Modifier.align(Alignment.Center), navController)
     }
@@ -54,26 +52,26 @@ fun Body(modifier: Modifier, navController: NavHostController) {
 
     Column(modifier = modifier) {
         HeaderTitle(Modifier.align(Alignment.CenterHorizontally))
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_MMmedium)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_16dp)))
         UserTitle()
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_XXsmall)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_6dp)))
         UserEmail(userEmail) { userEmail = it }
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         PasswordTitle()
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_XXsmall)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_6dp)))
         UserPassword(userPassword) { userPassword = it }
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_XXsmall)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_6dp)))
         ForgotPasswordTitle()
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_MMmedium)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_16dp)))
         LoginButton(isLoginEnable)
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_extralarge)))
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_XXsmall)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_30dp)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_6dp)))
         TextTitle(Modifier.align(Alignment.CenterHorizontally))
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_MMmedium)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_16dp)))
         SocialIcons()
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_MMmedium)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_16dp)))
         AccountText(Modifier.align(Alignment.CenterHorizontally), navController)
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_MMmedium)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_16dp)))
         InvitedText(Modifier.align(Alignment.CenterHorizontally), navController)
     }
 
@@ -90,7 +88,7 @@ fun UserTitle() {
         text = stringResource(id = R.string.user_title),
         color = BlackGrey,
         fontSize = with(LocalDensity.current){
-            dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+            dimensionResource(id = R.dimen.font_size_16sp).toSp()
         },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium
@@ -118,10 +116,10 @@ fun UserEmail(email: String, onTextChanged: (String) -> Unit) {
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Light,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_Mmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_14sp).toSp()
             },
         ),
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default))
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp))
     )
 }
 
@@ -131,7 +129,7 @@ fun PasswordTitle() {
         text = stringResource(id = R.string.password_title),
         color = BlackGrey,
         fontSize = with(LocalDensity.current){
-            dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+            dimensionResource(id = R.dimen.font_size_16sp).toSp()
         },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium
@@ -159,10 +157,10 @@ fun UserPassword(password: String, onTextChanged: (String) -> Unit) {
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Light,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_Mmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_14sp).toSp()
             },
         ),
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default)),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp)),
         trailingIcon = {
             val icon =
                 if (passwordVisibility) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
@@ -177,10 +175,10 @@ fun UserPassword(password: String, onTextChanged: (String) -> Unit) {
 @Composable
 fun ForgotPasswordTitle() {
     Text(
-        text = stringResource(id = R.string.forgotpassword_title),
+        text = stringResource(id = R.string.forgot_password_title),
         color = BlackGrey,
         fontSize = with(LocalDensity.current){
-            dimensionResource(id = R.dimen.fontsize_medium).toSp()
+            dimensionResource(id = R.dimen.font_size_12sp).toSp()
         },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Light
@@ -199,13 +197,13 @@ fun LoginButton(loginEnable: Boolean) {
             contentColor = BlackGrey,
             disabledContentColor = Grey,
         ),
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default))
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp))
     ) {
         Text(
-            text = stringResource(id = R.string.loginbutton_title),
+            text = stringResource(id = R.string.login_button_title),
             color = White,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_MMMmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_20sp).toSp()
             },
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Bold
@@ -221,7 +219,7 @@ fun TextTitle(modifier: Modifier) {
         text = stringResource(id = R.string.text_title),
         color = Grey,
         fontSize = with(LocalDensity.current){
-            dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+            dimensionResource(id = R.dimen.font_size_16sp).toSp()
         },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Light,
@@ -239,7 +237,7 @@ fun SocialIcons() {
     ) {
         Box(
             modifier = Modifier
-                .size(dimensionResource(id = R.dimen.box_XXXsmall))
+                .size(dimensionResource(id = R.dimen.box_40dp))
                 .clip(CircleShape)
                 .background(color = White100),
             contentAlignment = Alignment.Center
@@ -252,10 +250,10 @@ fun SocialIcons() {
                 )
             )
         }
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         Box(
             modifier = Modifier
-                .size(dimensionResource(id = R.dimen.box_XXXsmall))
+                .size(dimensionResource(id = R.dimen.box_40dp))
                 .clip(CircleShape)
                 .background(color = White100),
             contentAlignment = Alignment.Center
@@ -268,10 +266,10 @@ fun SocialIcons() {
                 )
             )
         }
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         Box(
             modifier = Modifier
-                .size(dimensionResource(id = R.dimen.box_XXXsmall))
+                .size(dimensionResource(id = R.dimen.box_40dp))
                 .clip(CircleShape)
                 .background(color = White100),
             contentAlignment = Alignment.Center
@@ -300,18 +298,18 @@ fun AccountText(modifier: Modifier, navController: NavHostController) {
             text = stringResource(id = R.string.account_text),
             color = Grey,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_16sp).toSp()
             },
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Light,
             modifier = modifier
         )
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_XXsmall)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_6dp)))
         Text(
-            text = stringResource(id = R.string.accountregister_text),
+            text = stringResource(id = R.string.account_register_text),
             color = BlackGrey,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_16sp).toSp()
             },
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Light,
@@ -329,7 +327,7 @@ fun InvitedText(modifier: Modifier, navController: NavHostController) {
         text = stringResource(id = R.string.invited_text),
         color = BlackGrey,
         fontSize = with(LocalDensity.current){
-            dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+            dimensionResource(id = R.dimen.font_size_16sp).toSp()
         },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium,

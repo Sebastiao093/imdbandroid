@@ -4,22 +4,24 @@
     <!--    MainScreen-->
     <string name="user_title">Usuario</string>
     <string name="password_title">Contraseña</string>
-    <string name="forgotpassword_title">¿Olvidaste la contraseña?</string>
-    <string name="loginbutton_title">Login</string>
+    <string name="forgot_password_title">¿Olvidaste la contraseña?</string>
+    <string name="login_button_title">Login</string>
     <string name="text_title">Ó podes ingresar con</string>
     <string name="account_text">¿No tenes cuenta?</string>
-    <string name="accountregister_text">Regístrate</string>
+    <string name="account_register_text">Regístrate</string>
     <string name="invited_text">Continuar como invitado</string>
 
     <!--    RegisterScreen-->
     <string name="account_title">Crear una cuenta</string>
-    <string name="labelname_title">Nombre</string>
-    <string name="labelemail_title">Correo electrónico</string>
-    <string name="labelpassword_title">Contraseña</string>
-    <string name="passwordtext_title">La contraseña debe contener 8 caracteres</string>
-    <string name="acceptbutton_text">Aceptar</string>
+    <string name="label_name_title">Nombre</string>
+    <string name="label_email_title">Correo electrónico</string>
+    <string name="label_password_title">Contraseña</string>
+    <string name="password_text_title">La contraseña debe contener 8 caracteres</string>
+    <string name="accept_button_text">Aceptar</string>
 
     <!--    SearchScreen-->
-    <string name="searchfield_text">Buscar IMDb</string>
+    <string name="search_field_text">Buscar IMDb</string>
+
+    <string name="api_key">c5c47722a4adcc77f6e84f28a48b857a</string>
 
 </resources>
