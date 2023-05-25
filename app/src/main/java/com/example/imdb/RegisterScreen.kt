@@ -24,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.imdb.ui.theme.*
 
@@ -34,14 +33,14 @@ fun RegisterScreen(navController: NavHostController) {
         Box(
             Modifier
                 .fillMaxSize()
-                .padding(dimensionResource(id = R.dimen.padding_small))
+                .padding(dimensionResource(id = R.dimen.padding_10dp))
                 .background(color = White100)
         ) {
             Header(Modifier.align(Alignment.TopStart), navController)
             Box(
                 Modifier
                     .fillMaxSize()
-                    .padding(dimensionResource(id = R.dimen.padding_large))
+                    .padding(dimensionResource(id = R.dimen.padding_24dp))
             ) {
                 BodyRegister(Modifier.align(Alignment.TopStart))
             }
@@ -63,21 +62,21 @@ fun BodyRegister(modifier: Modifier) {
         IconLogo(
             Modifier
                 .align(Alignment.Start)
-                .padding(top = dimensionResource(id = R.dimen.padding_large))
+                .padding(top = dimensionResource(id = R.dimen.padding_24dp))
         )
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_extralarge)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_30dp)))
         AccountTitle()
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         UserNameRegister(userNameRegister) { userNameRegister = it }
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         EmailRegister(userEmailRegister) { userEmailRegister = it }
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         PasswordRegister(userPasswordRegister) { userPasswordRegister = it }
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_small)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         PasswordTitleText()
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_large)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_24dp)))
         AcceptButton(isLoginEnable)
-        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_XXlarge)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_40dp)))
     }
 }
 
@@ -106,7 +105,7 @@ fun AccountTitle() {
         text = stringResource(id = R.string.account_title),
         color = BlackGrey,
         fontSize = with(LocalDensity.current){
-            dimensionResource(id = R.dimen.fontsize_MMMmedium).toSp()
+            dimensionResource(id = R.dimen.font_size_20sp).toSp()
         },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Medium
@@ -121,7 +120,7 @@ fun UserNameRegister(name: String, onTextChanged: (String) -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.labelname_title)) },
+        label = { Text(text = stringResource(id = R.string.label_name_title)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
@@ -135,10 +134,10 @@ fun UserNameRegister(name: String, onTextChanged: (String) -> Unit) {
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Normal,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_16sp).toSp()
             },
         ),
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default)),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp)),
 
         )
 }
@@ -151,7 +150,7 @@ fun EmailRegister(email: String, onTextChanged: (String) -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.labelemail_title)) },
+        label = { Text(text = stringResource(id = R.string.label_email_title)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
@@ -165,10 +164,10 @@ fun EmailRegister(email: String, onTextChanged: (String) -> Unit) {
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Normal,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_16sp).toSp()
             },
         ),
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default))
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp))
     )
 }
 
@@ -181,7 +180,7 @@ fun PasswordRegister(password: String, onTextChanged: (String) -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.labelpassword_title)) },
+        label = { Text(text = stringResource(id = R.string.label_password_title)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors = TextFieldDefaults.textFieldColors(
             textColor = Grey70,
@@ -195,10 +194,10 @@ fun PasswordRegister(password: String, onTextChanged: (String) -> Unit) {
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Normal,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_MMmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_16sp).toSp()
             },
         ),
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default)),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp)),
         trailingIcon = {
             val icon =
                 if (passwordVisibility) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
@@ -213,10 +212,10 @@ fun PasswordRegister(password: String, onTextChanged: (String) -> Unit) {
 @Composable
 fun PasswordTitleText() {
     Text(
-        text = stringResource(id = R.string.passwordtext_title),
+        text = stringResource(id = R.string.password_text_title),
         color = Grey,
         fontSize = with(LocalDensity.current){
-            dimensionResource(id = R.dimen.fontsize_medium).toSp()
+            dimensionResource(id = R.dimen.font_size_12sp).toSp()
         },
         fontFamily = RobotoBoldFamily,
         fontWeight = FontWeight.Light
@@ -235,13 +234,13 @@ fun AcceptButton(loginEnable: Boolean) {
             contentColor = BlackGrey,
             disabledContentColor = Grey,
         ),
-        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_default))
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp))
     ) {
         Text(
-            text = stringResource(id = R.string.acceptbutton_text),
+            text = stringResource(id = R.string.accept_button_text),
             color = White,
             fontSize = with(LocalDensity.current){
-                dimensionResource(id = R.dimen.fontsize_MMMmedium).toSp()
+                dimensionResource(id = R.dimen.font_size_20sp).toSp()
             },
             fontFamily = RobotoBoldFamily,
             fontWeight = FontWeight.Medium
