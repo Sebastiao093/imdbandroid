@@ -1,6 +1,5 @@
 package com.example.imdb
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import com.example.imdb.model.Movie
 import com.example.imdb.model.MovieResult
 import com.example.imdb.search.SearchService
 import com.example.imdb.ui.theme.*
@@ -35,10 +34,10 @@ import com.example.imdb.ui.theme.*
 @Composable
 fun SearchScreen(navController: NavHostController) {
     val apiKey = stringResource(id = R.string.api_key)
-    var movieList: List<MovieResult> = listOf()
+    val movieList = remember { mutableStateListOf<MovieResult>() }
     LaunchedEffect(key1 = true){
-        movieList = getTopRatedMovies(apiKey)
-        println(movieList.toString())
+        movieList.swapList(getTopRatedMovies(apiKey))
+        println(movieList.toList().toString())
     }
     Column(
         Modifier
@@ -149,18 +148,17 @@ fun CardItemMovie(movie: MovieResult, modifier: Modifier) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(dimensionResource(id = R.dimen.box_150dp)),
+                .height(dimensionResource(id = R.dimen.box_180dp)),
             backgroundColor = White,
             elevation = 0.dp
         ) {
             Row(horizontalArrangement = Arrangement.Center) {
-                Column() {
+                Column {
                     Image(
                         painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w200${movie.posterPath}"),
-                        //painter = painterResource(id = R.drawable.suicidesquad),
                         contentDescription = "Movie Photo",
                         modifier = Modifier
-                            .height(dimensionResource(id = R.dimen.box_150dp))
+                            .height(dimensionResource(id = R.dimen.box_180dp))
                             .width(dimensionResource(id = R.dimen.box_120dp))
                             .padding(
                                 top = dimensionResource(id = R.dimen.padding_10dp),
@@ -193,7 +191,7 @@ fun CardItemMovie(movie: MovieResult, modifier: Modifier) {
                     )
                     Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_2dp)))
                     Text(
-                        text = movie.releaseDate,
+                        text = movie.releaseDate.substring(startIndex = 0, endIndex = 4),
                         color = Grey,
                         fontFamily = RobotoBoldFamily,
                         fontWeight = FontWeight.Normal,
@@ -225,12 +223,8 @@ suspend fun getTopRatedMovies(apiKey: String): List<MovieResult> {
     return SearchService().getTopRatedMovies(apiKey)
 }
 
-fun getMovies(): List<Movie> {
-    return listOf(
-        Movie("Dune", 2021, "Timothee Chalamet, Zendaya", R.drawable.dune),
-        Movie("Free Guy", 2021, "Ryan Reynolds, Jodie Comer", R.drawable.freeguy),
-        Movie("Shang-Chi", 2021, "Simu Lui, Awkwafina", R.drawable.shangchi),
-        Movie("Suicide Squad", 2021, "Margot Robbie, John Cena", R.drawable.suicidesquad)
-    )
+fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
+    clear()
+    addAll(newList)
 }
 

@@ -57,6 +57,7 @@
     <dimen name="box_140dp">140.dp</dimen>
     <dimen name="box_150dp">150.dp</dimen>
     <dimen name="box_160dp">160.dp</dimen>
+    <dimen name="box_180dp">180.dp</dimen>
     <dimen name="box_200dp">200.dp</dimen>
     <dimen name="box_240dp">240.dp</dimen>
     <dimen name="box_300dp">300.dp</dimen>
