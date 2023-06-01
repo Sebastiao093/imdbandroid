@@ -1,4 +1,4 @@
-package com.example.imdb.search
+package com.example.imdb.search.data.network
 
 import com.example.imdb.model.MovieInfo
 import retrofit2.Response

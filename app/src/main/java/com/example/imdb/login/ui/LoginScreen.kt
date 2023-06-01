@@ -1,4 +1,4 @@
-package com.example.imdb
+package com.example.imdb.login.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,7 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,39 +27,40 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavHostController
+import com.example.imdb.R
 import com.example.imdb.navigation.AppScreens
 import com.example.imdb.ui.theme.*
 
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, loginViewModel: LoginViewModel) {
     val navController = navController
     Box(
         Modifier
             .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.padding_30dp))
     ) {
-        Body(Modifier.align(Alignment.Center), navController)
+        Body(Modifier.align(Alignment.Center), navController, loginViewModel)
     }
 
 }
 
 @Composable
-fun Body(modifier: Modifier, navController: NavHostController) {
+fun Body(modifier: Modifier, navController: NavHostController, loginViewModel: LoginViewModel) {
 
-    var userEmail by rememberSaveable { mutableStateOf("") }
-    var userPassword by rememberSaveable { mutableStateOf("") }
-    var isLoginEnable by rememberSaveable { mutableStateOf(false) }
+    val userEmail: String by loginViewModel.email.observeAsState(initial = "")
+    val userPassword: String by loginViewModel.password.observeAsState(initial = "")
+    val isLoginEnable: Boolean by loginViewModel.isLoginEnable.observeAsState(initial = false)
 
     Column(modifier = modifier) {
         HeaderTitle(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_16dp)))
         UserTitle()
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_6dp)))
-        UserEmail(userEmail) { userEmail = it }
+        UserEmail(userEmail) { loginViewModel.onLoginChanged(email = it, userPassword) }
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         PasswordTitle()
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_6dp)))
-        UserPassword(userPassword) { userPassword = it }
+        UserPassword(userPassword, loginViewModel) { loginViewModel.onLoginChanged(email = userEmail, password = it) }
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_6dp)))
         ForgotPasswordTitle()
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_16dp)))
@@ -137,8 +138,8 @@ fun PasswordTitle() {
 }
 
 @Composable
-fun UserPassword(password: String, onTextChanged: (String) -> Unit) {
-    var passwordVisibility by remember { mutableStateOf(false) }
+fun UserPassword(password: String, loginViewModel: LoginViewModel, onTextChanged: (String) -> Unit) {
+    val passwordVisibility: Boolean by loginViewModel.passwordVisibility.observeAsState(initial = false)
     TextField(
         value = password,
         onValueChange = { onTextChanged(it) },
@@ -164,7 +165,7 @@ fun UserPassword(password: String, onTextChanged: (String) -> Unit) {
         trailingIcon = {
             val icon =
                 if (passwordVisibility) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
-            IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+            IconButton(onClick = { loginViewModel.changePasswordVisibility(passwordVisibility) }) {
                 Icon(imageVector = icon, contentDescription = "show password")
             }
         },

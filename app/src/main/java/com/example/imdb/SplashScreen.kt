@@ -22,7 +22,7 @@ fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(key1 = true){
         delay(5000)
         navController.popBackStack() // limpia el stack de navegaciones para que no pueda volver atras
-        navController.navigate(AppScreens.MainScreen.route)// se llama a la clase de mapeo de pantallas para que vaya al MainScreen
+        navController.navigate(AppScreens.LoginScreen.route)// se llama a la clase de mapeo de pantallas para que vaya al MainScreen
     }//El Coroutine Hace referencia a una tarea asincrona
 
     Splash()

@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,17 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.imdb.model.MovieResult
-import com.example.imdb.search.SearchService
+import com.example.imdb.search.data.network.SearchService
+import com.example.imdb.search.ui.SearchViewModel
 import com.example.imdb.ui.theme.*
 
 @Composable
-fun SearchScreen(navController: NavHostController) {
-    val apiKey = stringResource(id = R.string.api_key)
-    val movieList = remember { mutableStateListOf<MovieResult>() }
-    LaunchedEffect(key1 = true){
-        movieList.swapList(getTopRatedMovies(apiKey))
-        println(movieList.toList().toString())
-    }
+fun SearchScreen(navController: NavHostController, searchViewModel: SearchViewModel) {
+    searchViewModel.getTopRatedMovies()
     Column(
         Modifier
             .fillMaxSize()
@@ -47,7 +44,7 @@ fun SearchScreen(navController: NavHostController) {
     ) {
         BodySearch(Modifier.align(Alignment.CenterHorizontally), navController)
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
-        MoviesListRecyclerView(Modifier.align(Alignment.CenterHorizontally), movieList)
+        MoviesListRecyclerView(Modifier.align(Alignment.CenterHorizontally), searchViewModel)
     }
 
 }
@@ -116,7 +113,8 @@ fun SearchField(searchText: String, onTextChanged: (String) -> Unit) {
 }
 
 @Composable
-fun MoviesListRecyclerView(modifier: Modifier, movieList: List<MovieResult>) {
+fun MoviesListRecyclerView(modifier: Modifier, searchViewModel: SearchViewModel) {
+    val movieList: List<MovieResult> by searchViewModel.movieList.observeAsState(initial = listOf())
     LazyColumn(
 
         horizontalAlignment = Alignment.CenterHorizontally,
