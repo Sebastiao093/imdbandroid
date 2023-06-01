@@ -7,8 +7,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.imdb.login.ui.LoginScreen
 import com.example.imdb.RegisterScreen
 import com.example.imdb.SearchScreen
-import com.example.imdb.SplashScreen
+import com.example.imdb.splash.ui.SplashScreen
+import com.example.imdb.splash.ui.SplashViewModel
 import com.example.imdb.login.ui.LoginViewModel
+import com.example.imdb.register.ui.RegisterViewModel
 import com.example.imdb.search.ui.SearchViewModel
 
 @Composable
@@ -18,13 +20,13 @@ fun AppNavigation() {
         startDestination = AppScreens.SplashScreen.route,
         builder = {
             composable(AppScreens.SplashScreen.route){
-                SplashScreen(navController)
+                SplashScreen(navController, SplashViewModel())
             }
             composable(AppScreens.LoginScreen.route){
                 LoginScreen(navController, LoginViewModel())
             }
             composable(AppScreens.RegisterScreen.route){
-                RegisterScreen(navController)
+                RegisterScreen(navController, RegisterViewModel())
             }
             composable(AppScreens.SearchScreen.route){
                 SearchScreen(navController, SearchViewModel())

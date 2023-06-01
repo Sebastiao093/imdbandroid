@@ -35,14 +35,13 @@ import com.example.imdb.ui.theme.*
 
 @Composable
 fun SearchScreen(navController: NavHostController, searchViewModel: SearchViewModel) {
-    searchViewModel.getTopRatedMovies()
     Column(
         Modifier
             .fillMaxSize()
             .background(color = White),
         verticalArrangement = Arrangement.Top
     ) {
-        BodySearch(Modifier.align(Alignment.CenterHorizontally), navController)
+        BodySearch(Modifier.align(Alignment.CenterHorizontally), navController, searchViewModel)
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
         MoviesListRecyclerView(Modifier.align(Alignment.CenterHorizontally), searchViewModel)
     }
@@ -50,8 +49,12 @@ fun SearchScreen(navController: NavHostController, searchViewModel: SearchViewMo
 }
 
 @Composable
-fun BodySearch(modifier: Modifier, navController: NavHostController) {
-    var searchText by remember { mutableStateOf("") }
+fun BodySearch(
+    modifier: Modifier,
+    navController: NavHostController,
+    searchViewModel: SearchViewModel
+) {
+    val searchText: String by searchViewModel.searchText.observeAsState(initial = "")
     Column(modifier = modifier) {
         Box(
             Modifier
@@ -59,7 +62,7 @@ fun BodySearch(modifier: Modifier, navController: NavHostController) {
                 .height(dimensionResource(id = R.dimen.box_100dp))
                 .background(color = White100)
         ) {
-            SearchField(searchText) { searchText = it }
+            SearchField(searchText) { searchViewModel.searchTextChanged(it) }
         }
     }
 

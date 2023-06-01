@@ -19,10 +19,18 @@ class SearchViewModel:ViewModel() {
     private val _movieList = MutableLiveData<List<MovieResult>>()
     val movieList: LiveData<List<MovieResult>> = _movieList
 
+    private val _searchText = MutableLiveData<String>()
+    val searchText: LiveData<String> = _searchText
+
     val searchUseCase = SearchUseCase()
 
     init {
         _movieList.value = ArrayList()
+        getTopRatedMovies()
+    }
+
+    fun searchTextChanged(searchText: String){
+        _searchText.value = searchText
     }
 
     fun getTopRatedMovies() =

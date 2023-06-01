@@ -1,4 +1,4 @@
-package com.example.imdb
+package com.example.imdb.splash.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -12,12 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import com.example.imdb.R
 import com.example.imdb.navigation.AppScreens
 import com.example.imdb.ui.theme.Yellow
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
+fun SplashScreen(navController: NavHostController, splashViewModel: SplashViewModel) {
 
     LaunchedEffect(key1 = true){
         delay(5000)

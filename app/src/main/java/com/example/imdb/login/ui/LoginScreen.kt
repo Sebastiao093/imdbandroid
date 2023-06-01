@@ -164,7 +164,7 @@ fun UserPassword(password: String, loginViewModel: LoginViewModel, onTextChanged
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp)),
         trailingIcon = {
             val icon =
-                if (passwordVisibility) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
+                if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
             IconButton(onClick = { loginViewModel.changePasswordVisibility(passwordVisibility) }) {
                 Icon(imageVector = icon, contentDescription = "show password")
             }
