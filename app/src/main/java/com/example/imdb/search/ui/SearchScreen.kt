@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,36 +26,35 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.imdb.model.MovieResult
-import com.example.imdb.search.SearchService
+import com.example.imdb.search.ui.SearchViewModel
 import com.example.imdb.ui.theme.*
 
 @Composable
-fun SearchScreen(navController: NavHostController) {
-    val apiKey = stringResource(id = R.string.api_key)
-    val movieList = remember { mutableStateListOf<MovieResult>() }
-    LaunchedEffect(key1 = true){
-        movieList.swapList(getTopRatedMovies(apiKey))
-        println(movieList.toList().toString())
-    }
+fun SearchScreen(navController: NavHostController, searchViewModel: SearchViewModel) {
     Column(
         Modifier
             .fillMaxSize()
             .background(color = White),
         verticalArrangement = Arrangement.Top
     ) {
-        BodySearch(Modifier.align(Alignment.CenterHorizontally), navController)
+        BodySearch(Modifier.align(Alignment.CenterHorizontally), navController, searchViewModel)
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_10dp)))
-        MoviesListRecyclerView(Modifier.align(Alignment.CenterHorizontally), movieList)
+        MoviesListRecyclerView(Modifier.align(Alignment.CenterHorizontally), searchViewModel)
     }
 
 }
 
 @Composable
-fun BodySearch(modifier: Modifier, navController: NavHostController) {
-    var searchText by remember { mutableStateOf("") }
+fun BodySearch(
+    modifier: Modifier,
+    navController: NavHostController,
+    searchViewModel: SearchViewModel
+) {
+    val searchText: String by searchViewModel.searchText.observeAsState(initial = "")
     Column(modifier = modifier) {
         Box(
             Modifier
@@ -62,7 +62,7 @@ fun BodySearch(modifier: Modifier, navController: NavHostController) {
                 .height(dimensionResource(id = R.dimen.box_100dp))
                 .background(color = White100)
         ) {
-            SearchField(searchText) { searchText = it }
+            SearchField(searchText) { searchViewModel.searchTextChanged(it) }
         }
     }
 
@@ -116,7 +116,8 @@ fun SearchField(searchText: String, onTextChanged: (String) -> Unit) {
 }
 
 @Composable
-fun MoviesListRecyclerView(modifier: Modifier, movieList: List<MovieResult>) {
+fun MoviesListRecyclerView(modifier: Modifier, searchViewModel: SearchViewModel) {
+    val movieList: List<MovieResult> by searchViewModel.movieList.observeAsState(initial = listOf())
     LazyColumn(
 
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -219,9 +220,6 @@ fun CardItemMovie(movie: MovieResult, modifier: Modifier) {
 
 }
 
-suspend fun getTopRatedMovies(apiKey: String): List<MovieResult> {
-    return SearchService().getTopRatedMovies(apiKey)
-}
 
 fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
     clear()
