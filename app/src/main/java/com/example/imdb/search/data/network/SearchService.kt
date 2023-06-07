@@ -6,10 +6,11 @@ import com.example.imdb.model.MovieResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.create
+import javax.inject.Inject
 
-class SearchService {
-
-    private val moviesApi = RetrofitHelper.getInstance().create(MoviesApi::class.java)
+class SearchService @Inject constructor(private val moviesApi: MoviesApi){
 
     suspend fun getTopRatedMovies(apiKey: String): List<MovieResult> =
         withContext(Dispatchers.IO + coroutineExceptionHandler) {

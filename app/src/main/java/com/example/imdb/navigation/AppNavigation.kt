@@ -14,7 +14,7 @@ import com.example.imdb.register.ui.RegisterViewModel
 import com.example.imdb.search.ui.SearchViewModel
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(searchViewModel: SearchViewModel) {
     val navController = rememberNavController()
     NavHost(navController = navController,
         startDestination = AppScreens.SplashScreen.route,
@@ -29,7 +29,7 @@ fun AppNavigation() {
                 RegisterScreen(navController, RegisterViewModel())
             }
             composable(AppScreens.SearchScreen.route){
-                SearchScreen(navController, SearchViewModel())
+                SearchScreen(navController, searchViewModel)
             }
         })
 }

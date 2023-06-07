@@ -26,10 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.imdb.model.MovieResult
-import com.example.imdb.search.data.network.SearchService
 import com.example.imdb.search.ui.SearchViewModel
 import com.example.imdb.ui.theme.*
 
@@ -220,9 +220,6 @@ fun CardItemMovie(movie: MovieResult, modifier: Modifier) {
 
 }
 
-suspend fun getTopRatedMovies(apiKey: String): List<MovieResult> {
-    return SearchService().getTopRatedMovies(apiKey)
-}
 
 fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
     clear()

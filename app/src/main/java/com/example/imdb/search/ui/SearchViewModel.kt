@@ -1,18 +1,19 @@
 package com.example.imdb.search.ui
 
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.imdb.R
 import com.example.imdb.model.MovieResult
 import com.example.imdb.search.domain.SearchUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class SearchViewModel:ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(private val searchUseCase: SearchUseCase):ViewModel() {
 
     private val _apiKey: String = "c5c47722a4adcc77f6e84f28a48b857a"
 
@@ -21,8 +22,6 @@ class SearchViewModel:ViewModel() {
 
     private val _searchText = MutableLiveData<String>()
     val searchText: LiveData<String> = _searchText
-
-    val searchUseCase = SearchUseCase()
 
     init {
         _movieList.value = ArrayList()

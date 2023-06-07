@@ -4,8 +4,11 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class RegisterViewModel: ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(): ViewModel() {
 
     private val _nameRegister = MutableLiveData<String>()
     val nameRegister: LiveData<String> = _nameRegister
