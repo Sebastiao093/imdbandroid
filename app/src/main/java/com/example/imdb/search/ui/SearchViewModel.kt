@@ -30,9 +30,10 @@ class SearchViewModel @Inject constructor(private val searchUseCase: SearchUseCa
 
     fun searchTextChanged(searchText: String){
         _searchText.value = searchText
+        searchMovies()
     }
 
-    fun getTopRatedMovies() =
+    private fun getTopRatedMovies() =
         viewModelScope.launch(Dispatchers.IO) {
             val result = doInBackground()
             withContext(Dispatchers.Main){
@@ -43,6 +44,19 @@ class SearchViewModel @Inject constructor(private val searchUseCase: SearchUseCa
 
     private suspend fun doInBackground(): List<MovieResult> = withContext(Dispatchers.IO) { // to run code in Background Thread
         return@withContext searchUseCase(_apiKey)
+    }
+
+    fun searchMovies() =
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = searchMoviesInBackground()
+            withContext(Dispatchers.Main){
+                _movieList.value = ArrayList()
+                _movieList.value = result
+            }
+        }
+
+    private suspend fun searchMoviesInBackground(): List<MovieResult> = withContext(Dispatchers.IO) {
+            return@withContext _searchText.value?.let { searchUseCase(_apiKey, it) }!!
     }
 
 }

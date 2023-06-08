@@ -9,4 +9,8 @@ class SearchRepository @Inject constructor(private val api: SearchService){
     suspend fun getTopRatedMovies(apiKey: String): List<MovieResult>{
         return api.getTopRatedMovies(apiKey)
     }
+
+    suspend fun searchMovies(apiKey: String, query: String): List<MovieResult>{
+        return api.searchMovies(apiKey, query)
+    }
 }

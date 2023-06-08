@@ -10,4 +10,7 @@ interface MoviesApi {
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(@Query("api_key") apiKey: String): Response<MovieInfo>
 
+    @GET("search/movie")
+    suspend fun searchMovies(@Query("api_key") apiKey: String, @Query("query") query: String): Response<MovieInfo>
+
 }

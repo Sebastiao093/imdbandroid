@@ -9,4 +9,8 @@ class SearchUseCase @Inject constructor(private val repository: SearchRepository
     suspend operator fun invoke(apiKey: String): List<MovieResult>{
         return repository.getTopRatedMovies(apiKey)
     }
+
+    suspend operator fun invoke(apiKey: String, query: String): List<MovieResult>{
+        return repository.searchMovies(apiKey, query)
+    }
 }
