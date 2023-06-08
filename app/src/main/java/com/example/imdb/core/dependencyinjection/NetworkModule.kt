@@ -28,7 +28,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGetTopRatedMovies(retrofit: Retrofit): MoviesApi{
+    fun provideMovies(retrofit: Retrofit): MoviesApi{
         return retrofit.create(MoviesApi::class.java)
     }
 

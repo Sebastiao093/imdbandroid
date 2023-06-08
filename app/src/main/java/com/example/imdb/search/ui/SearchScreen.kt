@@ -62,14 +62,14 @@ fun BodySearch(
                 .height(dimensionResource(id = R.dimen.box_100dp))
                 .background(color = White100)
         ) {
-            SearchField(searchText) { searchViewModel.searchTextChanged(it) }
+            SearchField(searchText, searchViewModel) { searchViewModel.searchTextChanged(it) }
         }
     }
 
 }
 
 @Composable
-fun SearchField(searchText: String, onTextChanged: (String) -> Unit) {
+fun SearchField(searchText: String, searchViewModel: SearchViewModel ,onTextChanged: (String) -> Unit) {
     Box(Modifier.padding(dimensionResource(id = R.dimen.padding_24dp))) {
         TextField(
             value = searchText,
@@ -107,7 +107,7 @@ fun SearchField(searchText: String, onTextChanged: (String) -> Unit) {
             ),
             shape = RoundedCornerShape(dimensionResource(id = R.dimen.box_10dp)),
             leadingIcon = {
-                IconButton(onClick = { }) {
+                IconButton(onClick = {  }) {
                     Icon(imageVector = Icons.Filled.Search, contentDescription = "search")
                 }
             },
@@ -192,7 +192,7 @@ fun CardItemMovie(movie: MovieResult, modifier: Modifier) {
                     )
                     Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_2dp)))
                     Text(
-                        text = movie.releaseDate.substring(startIndex = 0, endIndex = 4),
+                        text = if (movie.releaseDate != null && movie.releaseDate != "") movie.releaseDate.substring(startIndex = 0, endIndex = 4) else "Unavailable",
                         color = Grey,
                         fontFamily = RobotoBoldFamily,
                         fontWeight = FontWeight.Normal,

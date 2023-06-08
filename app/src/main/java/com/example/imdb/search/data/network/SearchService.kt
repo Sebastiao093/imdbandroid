@@ -21,6 +21,15 @@ class SearchService @Inject constructor(private val moviesApi: MoviesApi){
             // Checking the results
         }
 
+    suspend fun searchMovies(apiKey: String, query: String): List<MovieResult> =
+        withContext(Dispatchers.IO + coroutineExceptionHandler) {
+            val result = moviesApi.searchMovies(apiKey, query)
+            if (result != null)
+                Log.d("buscando pelicula: ", result.body().toString())
+            return@withContext result.body()!!.results
+            // Checking the results
+        }
+
     val coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
         throwable.printStackTrace()
     }
